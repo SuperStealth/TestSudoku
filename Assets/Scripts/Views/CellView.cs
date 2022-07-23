@@ -9,9 +9,10 @@ public class CellView : MonoBehaviour
 {
     [SerializeField] private Button button;
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private int cellNumber;
 
     public Button CellButton { get => button; }
-    public Action OnButtonPressed;
+    public Action<int> OnButtonPressed;
 
     private void Awake()
     {
@@ -28,9 +29,14 @@ public class CellView : MonoBehaviour
         text.color = isCorrect ? Color.black : Color.red;
     }
 
+    public void SetCellBackgroundColor(bool isSelected)
+    {
+        button.image.color = isSelected ? Color.yellow : Color.white;
+    }
+
     private void ButtonPressed()
     {
-        OnButtonPressed?.Invoke();
+        OnButtonPressed?.Invoke(cellNumber);
     }
 
     private void OnDestroy()

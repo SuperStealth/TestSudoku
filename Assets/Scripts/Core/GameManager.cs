@@ -23,6 +23,11 @@ namespace Sudoku
             fieldView.UpdateView(field);
         }
 
+        private void OnCellClicked()
+        {
+
+        }
+
         private void OnDestroy()
         {
             

@@ -36,7 +36,7 @@ namespace Sudoku
         private void StartGame()
         {
             var fieldGenerator = new FieldGenerator();
-            field = fieldGenerator.GenerateField(22, 20);
+            field = fieldGenerator.GenerateField(GameSettings.CurrentLevelFilledCells, 20);
             fieldView.UpdateView(field);
             livesCount = Constants.LivesCount;
             hintCount = Constants.HintCount;
@@ -73,7 +73,7 @@ namespace Sudoku
 
         private void EndGame(bool isWin)
         {
-            sceneService.GoToScene("MainScene");
+            sceneService.GoToScene("StartScene");
         }
 
         private void UndoButtonClicked()

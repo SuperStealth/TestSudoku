@@ -7,8 +7,7 @@ namespace Sudoku
     {
         [SerializeField] private RowView[] rows;
 
-        private int selectedRow;
-        private int selectedColumn;
+        private CellCoords selectedCellCoords = new CellCoords(0, 0);
 
         private void Awake()
         {
@@ -24,21 +23,26 @@ namespace Sudoku
             {
                 for (int j = 0; j < Constants.GridSize; j++)
                 {
-                    int cellValue = field.GetCell(i, j);
-                    if (cellValue != 0)
-                    {
-                        rows[i].GetCell(j).SetCellValue(cellValue);
-                    }                  
+                    rows[i].GetCell(j).SetCellValue(field.GetCellValue(i, j));               
                 }
             }
         }
 
+        public CellCoords GetSelectedCellCoords()
+        {
+            return selectedCellCoords;
+        }
+
+        public CellView GetSelectedCellView()
+        {
+            return rows[selectedCellCoords.X].GetCell(selectedCellCoords.Y);
+        }
+
         private void CellClicked(int rowNumber, int cellNumber)
         {
-            rows[selectedRow].GetCell(selectedColumn).SetCellBackgroundColor(false);
+            rows[selectedCellCoords.X].GetCell(selectedCellCoords.Y).SetCellBackgroundColor(false);
             rows[rowNumber].GetCell(cellNumber).SetCellBackgroundColor(true);
-            selectedRow = rowNumber;
-            selectedColumn = cellNumber;
+            selectedCellCoords = new CellCoords(rowNumber, cellNumber);
         }
 
         private void OnDestroy()

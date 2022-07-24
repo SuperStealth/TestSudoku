@@ -11,7 +11,7 @@ namespace Sudoku.Services
     {
         public static Dictionary<Type, IGameService> services = new Dictionary<Type, IGameService>();
 
-        public static T Add<T>(IGameService service)
+        public static T Add<T>(IGameService service) where T : IGameService
         {
             if (services.ContainsKey(typeof(T)))
             {
@@ -24,6 +24,15 @@ namespace Sudoku.Services
 
                 return (T)service;
             }
+        }
+
+        public static T Get<T>() where T : IGameService
+        {
+            if (services.ContainsKey(typeof(T)))
+            {
+                return (T)services[typeof(T)];
+            }
+            return default(T);
         }
     }
 }

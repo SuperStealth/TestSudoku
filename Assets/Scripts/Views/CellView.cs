@@ -21,7 +21,14 @@ public class CellView : MonoBehaviour
 
     public void SetCellValue(int value)
     {
-        text.text = value.ToString();
+        if (value == 0)
+        {
+            text.text = "";
+        }
+        else
+        {
+            text.text = value.ToString();
+        }
     }
 
     public void SetCellColor(bool isCorrect)

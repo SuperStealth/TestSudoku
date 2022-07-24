@@ -1,17 +1,20 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace Sudoku
 {
     public class Field
     {
-
         private int[][] cells;
 
-        private CellCoords lastSettedCell;
+        private Stack<CellCoords> filledCells;
+
+        private HashSet<CellCoords> incorrectCells;
 
         public Field(int[][] cells)
         {
             this.cells = cells;
+            filledCells = new Stack<CellCoords>();
+            incorrectCells = new HashSet<CellCoords>();
         }
 
         public int GetCellValue(int x, int y)
@@ -24,7 +27,7 @@ namespace Sudoku
             if (cells[x][y] == 0)
             {
                 cells[x][y] = value;
-                lastSettedCell = new CellCoords(x, y);
+                filledCells.Push(new CellCoords(x, y));
                 return true;
             }         
             return false;                       
@@ -32,6 +35,9 @@ namespace Sudoku
 
         public bool CheckWinCondition()
         {
+            if (incorrectCells.Count > 0)
+                return false;
+
             for (int i = 0; i < Constants.GridSize; i++)
             {
                 for (int j = 0; j < Constants.GridSize; j++)
@@ -47,9 +53,18 @@ namespace Sudoku
 
         public bool EraseLastSettedCell()
         {
-            if (cells[lastSettedCell.X][lastSettedCell.Y] == 0)
+            if (filledCells.Count == 0)
                 return false;
-            cells[lastSettedCell.X][lastSettedCell.Y] = 0;
+
+            var cell = filledCells.Pop();
+            cells[cell.X][cell.Y] = 0;
+
+            var cellCoords = new CellCoords(cell.X, cell.Y);
+            if (incorrectCells.Contains(cellCoords))
+            {
+                incorrectCells.Remove(cellCoords);
+            }
+            
             return true;
         }
 
@@ -58,19 +73,36 @@ namespace Sudoku
             for (int i = 0; i < Constants.GridSize; i++)
             {
                 if (cells[i][y] == value && x != i)
+                {
+                    incorrectCells.Add(new CellCoords(x, y));
                     return false;
+                }
+                    
                 if (cells[x][i] == value && y != i)
+                {
+                    incorrectCells.Add(new CellCoords(x, y));
                     return false;
+                }                   
             }
             for (int i = 0; i < Constants.RegionSize; i++)
             {
                 for (int j = 0; j < Constants.RegionSize; j++)
                 {
-                    if (cells[x / Constants.RegionSize * Constants.RegionSize + i][y / Constants.RegionSize * Constants.RegionSize + j] == value && x % Constants.RegionSize != i && y % Constants.RegionSize != j)
+                    int xCoord = x / Constants.RegionSize * Constants.RegionSize + i;
+                    int yCoord = y / Constants.RegionSize * Constants.RegionSize + j;
+                    if (cells[xCoord][yCoord] == value && x % Constants.RegionSize != i && y % Constants.RegionSize != j)
+                    {
+                        incorrectCells.Add(new CellCoords(x, y));
                         return false;
+                    }                    
                 }
             }
             return true;
+        }
+
+        public void GetHint()
+        {
+
         }
     }
 }

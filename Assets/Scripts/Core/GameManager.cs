@@ -13,6 +13,9 @@ namespace Sudoku
         [SerializeField] private Numbers numbers;
         [SerializeField] private TextMeshProUGUI livesText;
         [SerializeField] private TextMeshProUGUI hintCountText;
+        [SerializeField] private TextMeshProUGUI endGameText;
+        [SerializeField] private GameObject endGameScreen;
+        [SerializeField] private Button nextGameButton;
         [SerializeField] private Button hintButton;
         [SerializeField] private Button undoButton;
 
@@ -30,6 +33,7 @@ namespace Sudoku
             numbers.NumberClick += OnNumberClicked;
             undoButton.onClick.AddListener(UndoButtonClicked);
             hintButton.onClick.AddListener(HintButtonClicked);
+            nextGameButton.onClick.AddListener(NextGameButtonClicked);
             StartGame();           
         }
 
@@ -73,7 +77,8 @@ namespace Sudoku
 
         private void EndGame(bool isWin)
         {
-            sceneService.GoToScene("StartScene");
+            endGameScreen.SetActive(true);
+            endGameText.text = isWin ? "You WIN!!!" : "You lost...";
         }
 
         private void UndoButtonClicked()
@@ -84,7 +89,12 @@ namespace Sudoku
 
         private void HintButtonClicked()
         {
+            field.GetHint();
+        }
 
+        private void NextGameButtonClicked()
+        {
+            sceneService.GoToScene("MenuScene");
         }
 
         private void OnDestroy()
@@ -92,6 +102,7 @@ namespace Sudoku
             numbers.NumberClick -= OnNumberClicked;
             undoButton.onClick.RemoveListener(UndoButtonClicked);
             hintButton.onClick.RemoveListener(HintButtonClicked);
+            nextGameButton.onClick.RemoveListener(NextGameButtonClicked);
         }
     }
 }

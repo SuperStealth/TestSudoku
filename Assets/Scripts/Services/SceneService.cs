@@ -1,22 +1,22 @@
-using Sudoku.Services;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneService : IGameService
+namespace Sudoku.Services
 {
-    public bool Started { get; private set; }
-
-    public async Task<bool> Init()
+    public class SceneService : IGameService
     {
-        Started = true;
-        return Task.CompletedTask.IsCompleted;
-    }
+        public bool Started { get; private set; }
 
-    public void GoToScene(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
+        public Task<bool> Init()
+        {
+            Started = true;
+            return Task.FromResult(true);
+        }
+
+        public void GoToScene(string sceneName)
+        {
+            SceneManager.LoadScene(sceneName);
+        }
     }
 }
+

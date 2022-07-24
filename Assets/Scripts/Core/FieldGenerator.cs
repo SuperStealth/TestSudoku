@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Sudoku
 {
     public class FieldGenerator
     {
-
         private int[][] cells;
         private Random random;
 
@@ -108,9 +106,7 @@ namespace Sudoku
             {
                 for (int j = 0; j < i; j++)
                 {
-                    int tempValue = cells[i][j];
-                    cells[i][j] = cells[j][i];
-                    cells[j][i] = tempValue;
+                    SwapCells(ref cells[i][j], ref cells[j][i]);
                 }
             }
         }
@@ -186,4 +182,3 @@ namespace Sudoku
         }
     }
 }
-

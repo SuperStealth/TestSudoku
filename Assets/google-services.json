@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "534557665691",
+    "project_id": "testsudoku-3d763",
+    "storage_bucket": "testsudoku-3d763.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534557665691:android:2015f8c43b1b547637593e",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.TestSudoku"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534557665691-1294qperltid69qs5hnm6nirg3h5d45r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcVUseGCDwwpZjkaKeDMx-wKKf8Z7FUNk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534557665691-1294qperltid69qs5hnm6nirg3h5d45r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

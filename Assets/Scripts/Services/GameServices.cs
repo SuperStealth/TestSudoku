@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Sudoku.Services
@@ -26,13 +23,13 @@ namespace Sudoku.Services
             }
         }
 
-        public static T Get<T>() where T : IGameService
+        public static T Get<T>() where T : class
         {
             if (services.ContainsKey(typeof(T)))
             {
                 return (T)services[typeof(T)];
             }
-            return default(T);
+            return null;
         }
     }
 }

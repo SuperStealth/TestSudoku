@@ -1,4 +1,5 @@
 using Sudoku.Services;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,13 @@ namespace Sudoku
 {
     public class Menu : MonoBehaviour
     {
+        enum Difficulties
+        {
+            Easy,
+            Medium,
+            Hard
+        }
+
         [SerializeField] private Button easyButton;
         [SerializeField] private Button mediumButton;
         [SerializeField] private Button hardButton;
@@ -16,35 +24,37 @@ namespace Sudoku
         {
             sceneService = GameServices.Get<SceneService>();
 
-            easyButton.onClick.AddListener(StartEasyGame);
-            mediumButton.onClick.AddListener(StartMediumGame);
-            hardButton.onClick.AddListener(StartHardGame);
+            easyButton.onClick.AddListener(() => StartGame(Difficulties.Easy));
+            mediumButton.onClick.AddListener(() => StartGame(Difficulties.Medium));
+            hardButton.onClick.AddListener(() => StartGame(Difficulties.Hard));
         }
 
-        private void StartEasyGame()
+        private void StartGame(Difficulties level)
         {
-            GameSettings.CurrentLevelFilledCells = GameSettings.LowDifficultyLeftCells;
-            sceneService.GoToScene("MainScene");
-        }
+            switch (level)
+            {
+                case Difficulties.Easy:
+                    GameSettings.CurrentLevelFilledCells = GameSettings.LowDifficultyLeftCells;
+                    sceneService.GoToScene("MainScene");
+                    break;
 
-        private void StartMediumGame()
-        {
-            GameSettings.CurrentLevelFilledCells = GameSettings.MediumDifficultyLeftCells;
-            sceneService.GoToScene("MainScene");
-        }
+                case Difficulties.Medium:
+                    GameSettings.CurrentLevelFilledCells = GameSettings.MediumDifficultyLeftCells;
+                    sceneService.GoToScene("MainScene");
+                    break;
 
-        private void StartHardGame()
-        {
-            GameSettings.CurrentLevelFilledCells = GameSettings.HardDifficultyLeftCells;
-            sceneService.GoToScene("MainScene");
+                case Difficulties.Hard:
+                    GameSettings.CurrentLevelFilledCells = GameSettings.HardDifficultyLeftCells;
+                    sceneService.GoToScene("MainScene");
+                    break;
+            }
         }
 
         private void OnDestroy()
         {
-            easyButton.onClick.RemoveListener(StartEasyGame);
-            mediumButton.onClick.RemoveListener(StartMediumGame);
-            hardButton.onClick.RemoveListener(StartHardGame);
+            easyButton.onClick.RemoveAllListeners();
+            mediumButton.onClick.RemoveAllListeners();
+            hardButton.onClick.RemoveAllListeners();
         }
     }
 }
-

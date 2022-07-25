@@ -19,6 +19,4 @@ public static class GameSettings
         get => PlayerPrefs.GetInt("lowDifficultyLeftCells", 53);
         set => PlayerPrefs.SetInt("lowDifficultyLeftCells", value);
     }
-
-    public static int CurrentLevelFilledCells { get; set; }
 }

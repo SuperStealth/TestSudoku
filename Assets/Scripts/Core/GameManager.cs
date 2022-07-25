@@ -18,6 +18,7 @@ namespace Sudoku
         [SerializeField] private Button undoButton;
 
         private SceneService sceneService;
+        private LevelService levelService;
 
         private Field field;
 
@@ -27,6 +28,7 @@ namespace Sudoku
         private void Awake()
         {
             sceneService = GameServices.Get<SceneService>();
+            levelService = GameServices.Get<LevelService>();
 
             numbers.NumberClick += OnNumberClicked;
             undoButton.onClick.AddListener(UndoButtonClicked);
@@ -38,7 +40,7 @@ namespace Sudoku
         private void StartGame()
         {
             var fieldGenerator = new FieldGenerator();
-            field = fieldGenerator.GenerateField(GameSettings.CurrentLevelFilledCells, Constants.FlushCounts);
+            field = fieldGenerator.GenerateField(levelService.GetFilledCells(), Constants.FlushCounts);
             fieldView.UpdateView(field);
             livesCount = Constants.LivesCount;
             hintCount = Constants.HintCount;

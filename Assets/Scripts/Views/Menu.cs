@@ -6,47 +6,27 @@ namespace Sudoku
 {
     public class Menu : MonoBehaviour
     {
-        enum Difficulties
-        {
-            Easy,
-            Medium,
-            Hard
-        }
-
         [SerializeField] private Button easyButton;
         [SerializeField] private Button mediumButton;
         [SerializeField] private Button hardButton;
 
         private SceneService sceneService;
+        private LevelService levelService;
 
         private void Awake()
         {
             sceneService = GameServices.Get<SceneService>();
+            levelService = GameServices.Get<LevelService>();
 
-            easyButton.onClick.AddListener(() => StartGame(Difficulties.Easy));
-            mediumButton.onClick.AddListener(() => StartGame(Difficulties.Medium));
-            hardButton.onClick.AddListener(() => StartGame(Difficulties.Hard));
+            easyButton.onClick.AddListener(() => StartGame(Difficulty.Easy));
+            mediumButton.onClick.AddListener(() => StartGame(Difficulty.Medium));
+            hardButton.onClick.AddListener(() => StartGame(Difficulty.Hard));
         }
 
-        private void StartGame(Difficulties level)
+        private void StartGame(Difficulty level)
         {
-            switch (level)
-            {
-                case Difficulties.Easy:
-                    GameSettings.CurrentLevelFilledCells = GameSettings.LowDifficultyLeftCells;
-                    sceneService.GoToScene("MainScene");
-                    break;
-
-                case Difficulties.Medium:
-                    GameSettings.CurrentLevelFilledCells = GameSettings.MediumDifficultyLeftCells;
-                    sceneService.GoToScene("MainScene");
-                    break;
-
-                case Difficulties.Hard:
-                    GameSettings.CurrentLevelFilledCells = GameSettings.HardDifficultyLeftCells;
-                    sceneService.GoToScene("MainScene");
-                    break;
-            }
+            levelService.SetDifficulty(level);
+            sceneService.GoToScene("MainScene");
         }
 
         private void OnDestroy()

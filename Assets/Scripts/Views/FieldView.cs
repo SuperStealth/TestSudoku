@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Sudoku
@@ -59,4 +58,3 @@ namespace Sudoku
         }
     }
 }
-

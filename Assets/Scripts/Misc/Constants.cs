@@ -9,4 +9,3 @@ namespace Sudoku
         public const int FlushCounts = 20;
     }
 }
-

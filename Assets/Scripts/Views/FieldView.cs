@@ -28,6 +28,11 @@ namespace Sudoku
             }
         }
 
+        public CellView GetCell(CellCoords coords)
+        {
+            return rows[coords.X].GetCell(coords.Y);
+        }
+
         public CellCoords GetSelectedCellCoords()
         {
             return selectedCellCoords;

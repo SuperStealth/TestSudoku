@@ -12,7 +12,7 @@ namespace Sudoku.Services
         {
             if (services.ContainsKey(typeof(T)))
             {
-                Debug.Log($"Aleready added service of type {typeof(T).Name}");
+                Debug.Log($"Already added service of type {typeof(T).Name}");
                 return (T)services[typeof(T)];
             }
             else

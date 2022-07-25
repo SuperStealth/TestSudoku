@@ -10,11 +10,14 @@ namespace Sudoku
 
         private HashSet<CellCoords> incorrectCells;
 
+        private HintAdvisor advisor;
+
         public Field(int[][] cells)
         {
             this.cells = cells;
             filledCells = new Stack<CellCoords>();
             incorrectCells = new HashSet<CellCoords>();
+            advisor = new HintAdvisor();
         }
 
         public int GetCellValue(int x, int y)
@@ -100,9 +103,11 @@ namespace Sudoku
             return true;
         }
 
-        public void GetHint()
+        public CellCoords GetHint()
         {
-
+            advisor.MakeHint(cells, out var cellCoords, out int value);
+            cells[cellCoords.X][cellCoords.Y] = value;
+            return cellCoords;
         }
     }
 }

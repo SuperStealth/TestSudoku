@@ -1,6 +1,4 @@
 using Sudoku.Services;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,7 +38,7 @@ namespace Sudoku
         private void StartGame()
         {
             var fieldGenerator = new FieldGenerator();
-            field = fieldGenerator.GenerateField(GameSettings.CurrentLevelFilledCells, 20);
+            field = fieldGenerator.GenerateField(GameSettings.CurrentLevelFilledCells, Constants.FlushCounts);
             fieldView.UpdateView(field);
             livesCount = Constants.LivesCount;
             hintCount = Constants.HintCount;
@@ -89,7 +87,15 @@ namespace Sudoku
 
         private void HintButtonClicked()
         {
-            field.GetHint();
+            if (hintCount > 0)
+            {
+                hintCount--;
+                var cellCoords = field.GetHint();
+                fieldView.UpdateView(field);
+                var cell = fieldView.GetCell(cellCoords);
+                cell.TweenCellHinted();
+                hintCountText.text = hintCount.ToString();
+            }           
         }
 
         private void NextGameButtonClicked()
@@ -106,4 +112,3 @@ namespace Sudoku
         }
     }
 }
-
